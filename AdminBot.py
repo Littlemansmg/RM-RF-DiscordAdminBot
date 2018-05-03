@@ -48,17 +48,26 @@ async def on_command_error(error, ctx):
 # @bot.command(pass_context = True, name = 'help', description = 'Prints help text.', help = helps.commandHelp)
 # async def help(self, ctx, ):
 
+@bot.command(pass_context = True, command_prefix = commands.when_mentioned_or('/*'), name =  'i\'m new',
+             description = helps.newDesc, help = helps.newHelp, alias = helps.newAlias)
+async def new(ctx):
+    bot.say('This command works.')
+
 if __name__ == '__main__':
+    # get Token
     with open('token.txt') as token:
         token = token.readline()
 
+    # Start Logging
     logging.basicConfig(handlers = [logging.FileHandler('discord.log', 'a', 'utf-8')],
                         level = logging.INFO)
     
     try:
+        # Run bot
         loop = asyncio.get_event_loop()
         loop.run_until_complete(bot.run(token.strip()))
     except RuntimeError as e:
+        # If RuntimeError happens, stdout message/log.
         print('This is probably a Runtime error from turning me off.')
         now = dt.now().strftime('%m/%d %H:%M ')
         logging.error(now + str(e))
