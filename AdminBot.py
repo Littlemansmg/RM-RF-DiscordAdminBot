@@ -44,12 +44,20 @@ async def on_ready():
 async def on_command_error(error, ctx):
     bot.say('fuck')
 
+@bot.event
+async def on_message(ctx):
+    if ctx.content.startswith(bot.user):
+        message = ctx.content.split(bot.user)
+        if message[1] in commands.GroupMixin.commands:
+            bot.say('/*noob')
+
+
 # format help first.
 # @bot.command(pass_context = True, name = 'help', description = 'Prints help text.', help = helps.commandHelp)
 # async def help(self, ctx, ):
 
-@bot.command(pass_context = True, command_prefix = commands.when_mentioned(bot,''), name = 'noob',
-             description = helps.newDesc, help = helps.newHelp, alias = helps.newAlias)
+@bot.command(pass_context = True, name = 'noob', description = helps.newDesc, help = helps.newHelp,
+             alias = helps.newAlias)
 async def new(ctx):
     await bot.say('This command works.')
 
