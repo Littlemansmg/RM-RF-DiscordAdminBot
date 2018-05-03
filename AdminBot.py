@@ -51,7 +51,7 @@ async def on_command_error(error, ctx):
 @bot.command(pass_context = True, command_prefix = commands.when_mentioned_or('/*'), name =  'noob',
              description = helps.newDesc, help = helps.newHelp, alias = helps.newAlias)
 async def new(ctx):
-    bot.say('This command works.')
+    await bot.say('This command works.')
 
 if __name__ == '__main__':
     # get Token
