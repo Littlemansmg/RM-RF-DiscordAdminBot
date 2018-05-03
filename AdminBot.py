@@ -45,9 +45,9 @@ async def on_command_error(error, ctx):
     bot.say('fuck')
 
 @bot.event
-async def on_message(ctx):
-    if ctx.content.startswith(bot.user.mention + ' noob'):
-            await bot.say('/*noob')
+async def on_message(message):
+    if message.content.startswith(bot.user.mention + ' noob'):
+            await bot.send_message(message.channel, '/*noob')
 
 
 # format help first.
