@@ -46,10 +46,10 @@ async def on_command_error(error, ctx):
 
 @bot.event
 async def on_message(ctx):
-    if ctx.content.startswith(bot.user):
-        message = ctx.content.split(bot.user)
+    if ctx.content.startswith(bot.user.name):
+        message = ctx.content.split(bot.user.name)
         if message[1] in commands.GroupMixin.commands:
-            bot.say('/*noob')
+            await bot.say('/*noob')
 
 
 # format help first.
