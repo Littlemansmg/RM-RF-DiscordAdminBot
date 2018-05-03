@@ -48,7 +48,7 @@ async def on_command_error(error, ctx):
 # @bot.command(pass_context = True, name = 'help', description = 'Prints help text.', help = helps.commandHelp)
 # async def help(self, ctx, ):
 
-@bot.command(pass_context = True, command_prefix = commands.when_mentioned_or('/*'), name =  'i\'m new',
+@bot.command(pass_context = True, command_prefix = commands.when_mentioned_or('/*'), name =  'noob',
              description = helps.newDesc, help = helps.newHelp, alias = helps.newAlias)
 async def new(ctx):
     bot.say('This command works.')
