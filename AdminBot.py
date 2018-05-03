@@ -22,9 +22,6 @@ from help import helps
 
 # ----------------------------LOGS--------------------------------------
 
-logging.basicConfig(handlers = [logging.FileHandler('discord.log', 'a', 'utf-8')],
-                    level = logging.INFO)
-
 def commandInfo(ctx):
     pass
 
@@ -55,6 +52,9 @@ if __name__ == '__main__':
     with open('token.txt') as token:
         token = token.readline()
 
+    logging.basicConfig(handlers = [logging.FileHandler('discord.log', 'a', 'utf-8')],
+                        level = logging.INFO)
+    
     try:
         loop = asyncio.get_event_loop()
         loop.run_until_complete(bot.run(token.strip()))
