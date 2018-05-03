@@ -46,9 +46,9 @@ async def on_command_error(error, ctx):
 
 @bot.event
 async def on_message(ctx):
-    if ctx.content.startswith(bot.user.name):
-        message = ctx.content.split(bot.user.name)
-        if message[1] in commands.GroupMixin.commands:
+    if ctx.content.startswith('@' + bot.user.name):
+        message = ctx.content.split('@' + bot.user.name)
+        if message[1] in commands.GroupMixin.walk_commands():
             await bot.say('/*noob')
 
 
