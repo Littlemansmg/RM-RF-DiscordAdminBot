@@ -47,7 +47,7 @@ async def on_command_error(error, ctx):
 @bot.event
 async def on_message(message):
     if message.content.startswith(bot.user.mention + ' noob'):
-            await bot.invoke(commands.Context)
+            await bot.invoke(message)
 
 
 # format help first.
