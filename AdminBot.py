@@ -30,7 +30,7 @@ def commandWarning(ctx):
 
 # ----------------------------BOT---------------------------------------
 
-bot = commands.Bot(command_prefix = '*')
+bot = commands.Bot(command_prefix = '/*')
 
 # Todo: Learn how to format help
 # Remove help command for formatting.
@@ -44,10 +44,10 @@ async def on_ready():
 async def on_command_error(error, ctx):
     bot.say('fuck')
 
-@bot.event
-async def on_message(message):
-    if message.content.startswith(bot.user.mention + ' noob'):
-            await bot.send_message(message.channel, '/*noob')
+# @bot.event
+# async def on_message(message):
+#     if message.content.startswith(bot.user.mention + ' noob'):
+#             await bot.send_message(message.channel, '/*noob')
 
 
 # format help first.
