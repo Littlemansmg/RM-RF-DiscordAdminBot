@@ -30,7 +30,7 @@ def commandWarning(ctx):
 
 # ----------------------------BOT---------------------------------------
 
-bot = commands.Bot(command_prefix = '/*', self_bot= True)
+bot = commands.Bot(command_prefix = '/*')
 
 # Todo: Learn how to format help
 # Remove help command for formatting.
