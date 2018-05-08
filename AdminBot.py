@@ -30,7 +30,7 @@ def commandWarning(ctx):
 
 # ----------------------------BOT---------------------------------------
 
-bot = commands.Bot(command_prefix = '/*')
+bot = commands.Bot(command_prefix = '*')
 
 # Todo: Learn how to format help
 # Remove help command for formatting.
@@ -60,8 +60,8 @@ async def new(ctx):
     await bot.say('This command works.')
 
 @bot.command(pass_context = True, name = 'mention')
-async def mention(ctx, mention : discord.User):
-    await bot.say(mention.mention)
+async def mention(ctx, notice : discord.User):
+    await bot.say(notice.mention)
 
 if __name__ == '__main__':
     # get Token
