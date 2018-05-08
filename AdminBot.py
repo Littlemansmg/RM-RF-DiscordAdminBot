@@ -59,6 +59,10 @@ async def on_message(message):
 async def new(ctx):
     await bot.say('This command works.')
 
+@bot.command(pass_context = True, name = 'mention')
+async def mention(ctx, mention : discord.User):
+    await bot.say(mention.mention)
+
 if __name__ == '__main__':
     # get Token
     with open('token.txt') as token:
