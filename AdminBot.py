@@ -79,9 +79,9 @@ async def on_member_remove(member):
 @bot.command(pass_context = True, name = 'agree', description = helps.newDesc, help = helps.newHelp,
              alias = helps.newAlias)
 async def new(ctx):
-    roles = discord.Guild.roles
+    role = discord.utils.get(discord.Guild.roles, name = 'irl')
     author = ctx.message.author
-    await bot.add_roles(author, 'irl')
+    await bot.add_roles(author, role)
     await bot.say(author.mention + " You know have the basic role")
 
 @bot.command(pass_context = True, name = 'mention')
