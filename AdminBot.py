@@ -41,6 +41,11 @@ bot = commands.Bot(command_prefix = '/*')
 @bot.event
 async def on_ready():
     await bot.change_presence(game = discord.Game(name = "Type /*help for help"))
+    users = bot.get_all_members()
+    for user in users:
+        sqlconvert = (user,)
+        c.execute('''INSERT INTO rmusers (userid, last_time_message)
+                 VALUES (?,?);''', (sqlconvert, dt.utcnow().timestamp()))
 
 @bot.event
 async def on_command_error(error, ctx):
