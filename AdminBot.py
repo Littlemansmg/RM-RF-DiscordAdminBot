@@ -62,11 +62,11 @@ async def on_ready():
                   (str(sqlconvert), dt.utcnow().timestamp()))
         rmdb.commit()
 
-@bot.event
-async def on_message(message):
-    author = message.author
-    sqlconvert = (author.name,)
-    c.execute('UPDATE rmusers SET last_time_message = ? WHERE userid = ?', (str(sqlconvert), dt.utcnow().timestamp()))
+# @bot.event
+# async def on_message(message):
+#     author = message.author
+#     sqlconvert = (author.name,)
+#     c.execute('UPDATE rmusers SET last_time_message = ? WHERE userid = ?', (str(sqlconvert), dt.utcnow().timestamp()))
 
 @bot.event
 async def on_command_error(error, ctx):
