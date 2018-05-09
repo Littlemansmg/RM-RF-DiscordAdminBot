@@ -82,13 +82,12 @@ async def on_member_remove(member):
 
 @bot.command(pass_context = True, name = 'agree', description = helps.newDesc, help = helps.newHelp,
              alias = helps.newAlias)
-@commands.has_role('')
 async def new(ctx):
     message = ctx.message
     author = ctx.message.author
     role = discord.utils.get(author.server.roles, name = 'irl')
 
-    if not role in author.server.roles:
+    if not role in author.roles:
         await bot.delete_message(message)
         await bot.add_roles(author, role)
         await bot.say(author.mention + " You now have agreed to our rules, and have the most basic role. "
