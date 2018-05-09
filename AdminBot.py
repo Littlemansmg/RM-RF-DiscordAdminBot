@@ -19,7 +19,7 @@ import discord
 import logging
 import asyncio
 import sqlite3
-import os
+import asyncio
 from help import helps
 
 # ----------------------------LOGS--------------------------------------
@@ -42,15 +42,31 @@ bot = commands.Bot(command_prefix = '/*')
 # Remove help command for formatting.
 # bot.remove_command('help')
 
+async def bginactive():
+    await bot.wait_until_ready()
+    nowutc = dt.utcnow().timestamp()
+    while not bot.is_closed:
+        c.execute('SELECT * FROM rmusers WHERE last_time_message > last_time_message + 60')
+        inactive = c.fetchall()
+        print(inactive)
+        await asyncio.sleep(60)
+
+
 @bot.event
 async def on_ready():
     await bot.change_presence(game = discord.Game(name = "Type /*help for help"))
     users = bot.get_all_members()
     for user in users:
         sqlconvert = (user.name,)
-        c.execute("INSERT OR IGNORE INTO rmusers(userid, last_time_message)VALUES (?,?);",
+        c.execute("INSERT OR IGNORE INTO rmusers(userid, last_time_message)VALUES (?,?)",
                   (str(sqlconvert), dt.utcnow().timestamp()))
         rmdb.commit()
+
+@bot.event
+async def on_message(message):
+    author = message.author
+    sqlconvert = (author.name,)
+    c.execute('UPDATE rmusers SET last_time_message = ? WHERE userid = ?', (str(sqlconvert), dt.utcnow().timestamp()))
 
 @bot.event
 async def on_command_error(error, ctx):
@@ -59,14 +75,14 @@ async def on_command_error(error, ctx):
 @bot.event
 async def on_member_join(member):
     sqlconvert = (member.name,)
-    c.execute("INSERT INTO rmusers(userid, last_time_message)VALUES (?,?);",
+    c.execute("INSERT INTO rmusers(userid, last_time_message)VALUES (?,?)",
               (str(sqlconvert), dt.utcnow().timestamp()))
     rmdb.commit()
 
 @bot.event
 async def on_member_remove(member):
     sqlconvert = (member.name,)
-    c.execute("DELETE FROM rmusers WHERE userid = ?;", str(sqlconvert))
+    c.execute("DELETE FROM rmusers WHERE userid = ?", str(sqlconvert))
     rmdb.commit()
     bot.send_message(member, "You have been kicked from the rm -rf/* server. ")
 
@@ -86,9 +102,8 @@ async def new(ctx):
     message = ctx.message
     author = ctx.message.author
     role = discord.utils.get(author.server.roles, name = 'irl')
-
+    await bot.delete_message(message)
     if not role in author.roles:
-        await bot.delete_message(message)
         await bot.add_roles(author, role)
         await bot.say(author.mention + " You now have agreed to our rules, and have the most basic role. "
                                        "Welcome to the rm -rf /* server!")
@@ -112,7 +127,7 @@ if __name__ == '__main__':
     rmdb = sqlite3.connect('rm.db')
     c = rmdb.cursor()
 
-    c.execute('''CREATE TABLE IF NOT EXISTS rmusers (userid TEXT PRIMARY KEY, last_time_message REAL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS rmusers (userid TEXT PRIMARY KEY, last_time_message INTEGER)''')
 
     try:
         # Run bot
