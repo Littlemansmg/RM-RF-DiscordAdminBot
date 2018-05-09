@@ -81,7 +81,7 @@ async def on_member_remove(member):
 async def new(ctx):
     roles = discord.Guild.roles
     author = ctx.message.author
-    await bot.add_roles(author, discord.Role.name == 'irl')
+    await bot.add_roles(author, 'irl')
     await bot.say(author.mention + " You know have the basic role")
 
 @bot.command(pass_context = True, name = 'mention')
