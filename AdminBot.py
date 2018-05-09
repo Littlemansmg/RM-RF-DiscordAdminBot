@@ -132,7 +132,7 @@ if __name__ == '__main__':
     try:
         # Run bot
         loop = asyncio.get_event_loop()
-        loop.create_task(bginactive())
+        bot.loop.create_task(bginactive())
         loop.run_until_complete(bot.run(token.strip()))
     except RuntimeError as e:
         # If RuntimeError happens, stdout message/log.
