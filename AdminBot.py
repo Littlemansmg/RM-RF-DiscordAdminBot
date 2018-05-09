@@ -17,7 +17,6 @@ from discord.ext import commands
 from datetime import datetime as dt
 import discord
 import logging
-import asyncio
 import sqlite3
 import asyncio
 from help import helps
@@ -25,7 +24,11 @@ from help import helps
 # ----------------------------LOGS--------------------------------------
 
 def commandInfo(ctx):
-    pass
+    now = dt.now().strftime('%m/%d %H:%M ')
+    logging.info(now + ' Command Used: '
+                 + ' Server: ' + ctx.message.server.name + ':' + ctx.message.server.id
+                 + ' Author: ' + str(ctx.message.author)
+                 + ' Invoke: \'' + str(ctx.message.content) + ' \'')
 
 def commandWarning(ctx):
     pass
