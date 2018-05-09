@@ -18,6 +18,8 @@ from datetime import datetime as dt
 import discord
 import logging
 import asyncio
+import sqlite3
+import os
 from help import helps
 
 # ----------------------------LOGS--------------------------------------
@@ -71,13 +73,21 @@ if __name__ == '__main__':
     # Start Logging
     logging.basicConfig(handlers = [logging.FileHandler('discord.log', 'a', 'utf-8')],
                         level = logging.INFO)
-    
+
+    #connect to DB
+    rmdb = sqlite3.connect('rm.db')
+    c = rmdb.cursor()
+
+    c.execute('''CREATE TABLE IF NOT EXISTS rmusers (userid TEXT PRIMARY KEY, last_time_message INTEGER)''')
+
     try:
         # Run bot
         loop = asyncio.get_event_loop()
         loop.run_until_complete(bot.run(token.strip()))
     except RuntimeError as e:
         # If RuntimeError happens, stdout message/log.
+        rmdb.commit()
+        rmdb.close()
         print('This is probably a Runtime error from turning me off.')
         now = dt.now().strftime('%m/%d %H:%M ')
         logging.error(now + str(e))
