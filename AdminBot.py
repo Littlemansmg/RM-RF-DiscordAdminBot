@@ -51,6 +51,12 @@ async def on_ready():
 async def on_command_error(error, ctx):
     bot.say('fuck')
 
+@bot.event
+async def on_member_join(member):
+    sqlconvert = (member.name,)
+    c.execute("INSERT OR IGNORE INTO rmusers(userid, last_time_message)VALUES (?,?);",
+              (str(sqlconvert), dt.utcnow().timestamp()))
+
 # @bot.event
 # async def on_message(message):
 #     if message.content.startswith(bot.user.mention + ' noob'):
