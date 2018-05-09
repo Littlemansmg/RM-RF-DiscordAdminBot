@@ -45,7 +45,7 @@ bot = commands.Bot(command_prefix = '/*')
 async def bginactive():
     await bot.wait_until_ready()
     nowutc = dt.utcnow().timestamp()
-    while not bot.is_closed:
+    if dt.utcnow().timestamp() == nowutc + 60:
         c.execute('SELECT * FROM rmusers WHERE last_time_message < last_time_message + 60')
         inactive = c.fetchall()
         print(inactive)
