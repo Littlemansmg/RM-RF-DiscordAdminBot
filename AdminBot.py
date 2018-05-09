@@ -43,7 +43,7 @@ async def on_ready():
     await bot.change_presence(game = discord.Game(name = "Type /*help for help"))
     users = bot.get_all_members()
     for user in users:
-        sqlconvert = (user,)
+        sqlconvert = (user.name,)
         c.execute("INSERT INTO rmusers(userid, last_time_message)VALUES (?,?);",
                   (str(sqlconvert), dt.utcnow().timestamp()))
 
