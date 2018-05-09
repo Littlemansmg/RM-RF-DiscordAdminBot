@@ -42,14 +42,14 @@ bot = commands.Bot(command_prefix = '/*')
 # Remove help command for formatting.
 # bot.remove_command('help')
 
-async def bginactive():
-    await bot.wait_until_ready()
-    nowutc = dt.utcnow().timestamp()
-    if dt.utcnow().timestamp() == nowutc + 60:
-        c.execute('SELECT * FROM rmusers WHERE last_time_message < last_time_message + 60')
-        inactive = c.fetchall()
-        print(inactive)
-        await asyncio.sleep(60)
+# async def bginactive():
+#     await bot.wait_until_ready()
+#     nowutc = dt.utcnow().timestamp()
+#     if dt.utcnow().timestamp() == nowutc + 60:
+#         c.execute('SELECT * FROM rmusers WHERE last_time_message < last_time_message + 60')
+#         inactive = c.fetchall()
+#         print(inactive)
+#         await asyncio.sleep(60)
 
 
 @bot.event
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     try:
         # Run bot
         loop = asyncio.get_event_loop()
-        bot.loop.create_task(bginactive())
+        # bot.loop.create_task(bginactive())
         loop.run_until_complete(bot.run(token.strip()))
     except RuntimeError as e:
         # If RuntimeError happens, stdout message/log.
