@@ -40,8 +40,6 @@ bot = commands.Bot(command_prefix = '/*')
 
 @bot.event
 async def on_ready():
-    rmdb = sqlite3.connect('rm.db')
-    c = rmdb.cursor()
     await bot.change_presence(game = discord.Game(name = "Type /*help for help"))
     users = bot.get_all_members()
     for user in users:
@@ -85,7 +83,7 @@ if __name__ == '__main__':
     c = rmdb.cursor()
 
     c.execute('''CREATE TABLE IF NOT EXISTS rmusers (userid TEXT PRIMARY KEY, last_time_message TEXT)''')
-    rmdb.close()
+
     try:
         # Run bot
         loop = asyncio.get_event_loop()
