@@ -87,8 +87,8 @@ async def new(ctx):
     message = ctx.message
     author = ctx.message.author
     role = discord.utils.get(author.server.roles, name = 'irl')
-    
-    if not role in author.roles:
+
+    if not role in author.server.roles:
         await bot.delete_message(message)
         await bot.add_roles(author, role)
         await bot.say(author.mention + " You now have agreed to our rules, and have the most basic role. "
