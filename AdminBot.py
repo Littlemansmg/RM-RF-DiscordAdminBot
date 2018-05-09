@@ -46,6 +46,7 @@ async def on_ready():
         sqlconvert = (user.name,)
         c.execute("INSERT OR IGNORE INTO rmusers(userid, last_time_message)VALUES (?,?);",
                   (str(sqlconvert), dt.utcnow().timestamp()))
+        rmdb.commit()
 
 @bot.event
 async def on_command_error(error, ctx):
@@ -54,8 +55,16 @@ async def on_command_error(error, ctx):
 @bot.event
 async def on_member_join(member):
     sqlconvert = (member.name,)
-    c.execute("INSERT OR IGNORE INTO rmusers(userid, last_time_message)VALUES (?,?);",
+    c.execute("INSERT INTO rmusers(userid, last_time_message)VALUES (?,?);",
               (str(sqlconvert), dt.utcnow().timestamp()))
+    rmdb.commit()
+
+@bot.event
+async def on_member_remove(member):
+    sqlconvert = (member.name,)
+    c.execute("DELETE FROM rmusers WHERE userid = ?;", str(sqlconvert))
+    rmdb.commit()
+    bot.send_message(member, "You have been kicked from the rm -rf/* server. ")
 
 # @bot.event
 # async def on_message(message):
@@ -67,10 +76,13 @@ async def on_member_join(member):
 # @bot.command(pass_context = True, name = 'help', description = 'Prints help text.', help = helps.commandHelp)
 # async def help(self, ctx, ):
 
-@bot.command(pass_context = True, name = 'noob', description = helps.newDesc, help = helps.newHelp,
+@bot.command(pass_context = True, name = 'agree', description = helps.newDesc, help = helps.newHelp,
              alias = helps.newAlias)
 async def new(ctx):
-    await bot.say('This command works.')
+    roles = discord.Guild.roles
+    author = ctx.message.author
+    await bot.add_roles(author, discord.Role.name == 'irl')
+    await bot.say(author.mention + " You know have the basic role")
 
 @bot.command(pass_context = True, name = 'mention')
 async def mention(ctx, notice : discord.User):
