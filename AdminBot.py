@@ -44,7 +44,7 @@ async def on_ready():
     users = bot.get_all_members()
     for user in users:
         sqlconvert = (user.name,)
-        c.execute("INSERT INTO rmusers(userid, last_time_message)VALUES (?,?);",
+        c.execute("INSERT OR IGNORE INTO rmusers(userid, last_time_message)VALUES (?,?);",
                   (str(sqlconvert), dt.utcnow().timestamp()))
 
 @bot.event
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     rmdb = sqlite3.connect('rm.db')
     c = rmdb.cursor()
 
-    c.execute('''CREATE TABLE IF NOT EXISTS rmusers (userid TEXT PRIMARY KEY, last_time_message TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS rmusers (userid TEXT PRIMARY KEY, last_time_message REAL)''')
 
     try:
         # Run bot
