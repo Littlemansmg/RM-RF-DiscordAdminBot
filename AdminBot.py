@@ -44,7 +44,8 @@ async def on_ready():
     users = bot.get_all_members()
     for user in users:
         sqlconvert = (user,)
-        c.execute('''INSERT INTO rmusers(userid, last_time_message)VALUES (?,?);''', (sqlconvert, dt.utcnow().timestamp()))
+        c.execute("INSERT INTO rmusers(userid, last_time_message)VALUES (?,?);",
+                  (str(sqlconvert), dt.utcnow().timestamp()))
 
 @bot.event
 async def on_command_error(error, ctx):
