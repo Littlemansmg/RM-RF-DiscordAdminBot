@@ -46,7 +46,7 @@ async def bginactive():
     await bot.wait_until_ready()
     nowutc = dt.utcnow().timestamp()
     while not bot.is_closed:
-        c.execute('SELECT * FROM rmusers WHERE last_time_message > last_time_message + 60')
+        c.execute('SELECT * FROM rmusers WHERE last_time_message < last_time_message + 60')
         inactive = c.fetchall()
         print(inactive)
         await asyncio.sleep(60)
